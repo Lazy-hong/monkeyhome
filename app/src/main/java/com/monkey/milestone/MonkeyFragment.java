@@ -12,9 +12,11 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.monkey.home.R;
+import com.monkey.util.volley.BitmapCache;
 import com.monkey.util.volley.VolleyInterface;
 import com.monkey.util.volley.VolleyRequest;
 
@@ -41,26 +43,22 @@ public class MonkeyFragment extends Fragment {
         network_imageview= (NetworkImageView) view.findViewById(R.id.network_imageview);
         imageview= (ImageView) view.findViewById(R.id.imageview);
 
-        ImageRequest imageRequest=new ImageRequest(url, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                imageview.setImageBitmap(response);
-            }
-        },  0, 0,ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("11111111111",error.toString());
-                imageview.setImageResource(R.mipmap.monkey_house);
-            }
-        });
-        if(MyApplication.mRequestQueue==null){
-            Log.e("11111111111","1");
-        }
-        if( MyApplication.getRequestQueue()==null){
-            Log.e("11111111111","2");
-        }
-        MyApplication.getRequestQueue().add(imageRequest);
-
+//        ImageRequest imageRequest=new ImageRequest(url, new Response.Listener<Bitmap>() {
+//            @Override
+//            public void onResponse(Bitmap response) {
+//                imageview.setImageBitmap(response);
+//            }
+//        },  0, 0,ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                imageview.setImageResource(R.mipmap.monkey_house);
+//            }
+//        });
+//
+//        MyApplication.getRequestQueue().add(imageRequest);
+        ImageLoader loader=new ImageLoader(MyApplication.getRequestQueue(),new BitmapCache());
+        ImageLoader.ImageListener imageListener=ImageLoader.getImageListener(imageview,R.mipmap.monkey_house,R.mipmap.monkey_house);
+        loader.get(url,imageListener,0,0,ImageView.ScaleType.CENTER);
         return view;
     }
     private void testPost(){
