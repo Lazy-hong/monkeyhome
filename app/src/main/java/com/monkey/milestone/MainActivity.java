@@ -9,11 +9,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.android.volley.VolleyError;
 import com.monkey.home.R;
 import com.monkey.ui.view.ChangeColorIconWithText;
+import com.monkey.util.volley.VolleyInterface;
+import com.monkey.util.volley.VolleyRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,ViewPager.OnPageChangeListener{
    private ViewPager mViewPager;
